@@ -62,6 +62,11 @@ class SiteController extends Controller
         return $this->render('index');
     }
     
+    public function actionRoutes()
+    {
+        return $this->render('routes');
+    }
+    
     /**
      * Ajax handler for language change dropdown list. Sets cookie ready for next request
      */

@@ -9,8 +9,6 @@ $this->title = 'My Yii Application';
         <h1><?= Yii::t('app','Welcome') ?></h1>
         
         <p class="lead"><?=  Yii::$app->formatter->asDate('2015-01-15', 'long') ?></p>
-        
-        <p><?= Url::to(['book/view', 'id'=>2]); ?></p>
 
         <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
     </div>

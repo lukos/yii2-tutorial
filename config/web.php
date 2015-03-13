@@ -82,14 +82,23 @@ $config = [
             //'showScriptName'=>'false',
             'rules' => [
                 //'books' => 'book/index',
-                //'<controller>s' => '<controller>/index',
-                //'<controller>/<id:\d+>' => '<controller>/view',   
+                '<controller>s' => '<controller>/index',
+                '<controller>/<id:\d+>' => '<controller>/view',   
                 //[
                 //    'pattern' => 'books',
                 //    'route' => 'book/index',
                 //    'suffix' => '.html',
                 //],
                 //'book/view/<id:\d+>'=>'book/view',
+                //'book/view/all'=>'book/index',
+                //[
+                //    'pattern' => 'book/<id:\d+>',
+                //    'route' => 'book/view',
+                //    'defaults' => ['id' => '2'],
+                //],
+                //'POST book/<id:\d+>' => 'book/update',
+                //'GET book/<id:\d+>' => 'book/view',
+                //'DELETE book/<id:\d+>' => 'book/delete',
             ],
         ],
          'authManager' => [

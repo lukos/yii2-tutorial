@@ -4,9 +4,13 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
+use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\db\Query;
 use app\models\LoginForm;
+use app\models\Book;
 use app\models\ContactForm;
 use app\models\SignupForm;
 use app\models\PasswordResetRequestForm;
@@ -59,7 +63,34 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        //return $this->render('index');
+        
+        /*$cmd = Yii::$app->db->createCommand('SELECT * FROM {{%book}} ORDER BY [[rank]] LIMIT 5');
+        $provider = new ArrayDataProvider([
+            'allModels' => $cmd->queryAll(),
+        ]);
+        
+        return $this->render('index', [
+            'dataProvider' => $provider,
+        ]);*/
+        
+        $query = new Query;
+        $provider = new ArrayDataProvider([
+            'allModels' => $query->from('{{%book}}')->orderBy('[[rank]]')->limit(3)->all(),
+        ]);
+        
+        return $this->render('index', [
+            'dataProvider' => $provider,
+        ]);
+        
+        /*
+        $dataProvider = new ActiveDataProvider([
+            'query' => Book::find()->orderBy('rank')->limit(10),
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);*/
     }
     
     public function actionRoutes()

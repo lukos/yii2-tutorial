@@ -12,6 +12,7 @@ use Yii;
  * @property string $description
  * @property integer $author_id
  * @property string $isbn
+ * @property integer $rank
  *
  * @property Author $author
  */
@@ -51,6 +52,7 @@ class Book extends \yii\db\ActiveRecord
             'description' => Yii::t('app', 'Description'),
             'author_id' => Yii::t('app', 'Author'),
             'isbn' => Yii::t('app', 'Isbn'),
+            'rank' => Yii::t('app', 'Rank'),
         ];
     }
 

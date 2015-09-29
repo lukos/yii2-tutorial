@@ -63,34 +63,13 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        //return $this->render('index');
-        
-        /*$cmd = Yii::$app->db->createCommand('SELECT * FROM {{%book}} ORDER BY [[rank]] LIMIT 5');
-        $provider = new ArrayDataProvider([
-            'allModels' => $cmd->queryAll(),
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => Book::find()->orderBy('rank')->limit(3)->asArray()->all(),
         ]);
-        
-        return $this->render('index', [
-            'dataProvider' => $provider,
-        ]);*/
-        
-        $query = new Query;
-        $provider = new ArrayDataProvider([
-            'allModels' => $query->from('{{%book}}')->orderBy('[[rank]]')->limit(3)->all(),
-        ]);
-        
-        return $this->render('index', [
-            'dataProvider' => $provider,
-        ]);
-        
-        /*
-        $dataProvider = new ActiveDataProvider([
-            'query' => Book::find()->orderBy('rank')->limit(10),
-        ]);
-
+                
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-        ]);*/
+        ]);
     }
     
     public function actionRoutes()

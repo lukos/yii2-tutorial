@@ -61,6 +61,12 @@ class Book extends \yii\db\ActiveRecord
      */
     public function getAuthor()
     {
-        return $this->hasOne(Author::className(), ['id' => 'author_id']);
+        return $this->hasOne(Author::className(), ['id' => 'author_id'])->inverseOf('books');
+    }
+    
+    public function getUsers()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])
+            ->viaTable('book_user_link', ['book_id' => 'id']);
     }
 }

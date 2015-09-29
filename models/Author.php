@@ -55,7 +55,7 @@ class Author extends \yii\db\ActiveRecord
      */
     public function getBooks()
     {
-        return $this->hasMany(Book::className(), ['author_id' => 'id']);
+        return $this->hasMany(Book::className(), ['author_id' => 'id'])->inverseOf('author');
     }
     
     public function getDisplayName()

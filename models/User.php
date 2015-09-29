@@ -272,4 +272,15 @@ class User extends ActiveRecord implements IdentityInterface
         
         return $firstEmail == "luke@pixelpin.co.uk";
     }
+    
+    public function getUserBooks()
+    {
+        return $this->hasMany(BookUserLink::className(), ['user_id' => 'id']);
+    }
+    
+    public function getBooks()
+    {
+        return $this->hasMany(Book::className(), ['id' => 'book_id'])
+            ->via('userBooks');
+    }
 }

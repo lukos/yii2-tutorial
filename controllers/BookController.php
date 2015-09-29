@@ -4,6 +4,7 @@ namespace app\Controllers;
 
 use Yii;
 use app\models\Book;
+use app\models\Author;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -31,7 +32,9 @@ class BookController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
+    {   
+        Book::updateAll(['rank'=> new \yii\db\Expression('[[rank]] + 1')]);
+        
         $dataProvider = new ActiveDataProvider([
             'query' => Book::find(),
         ]);
@@ -47,7 +50,7 @@ class BookController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
+    {   
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);

@@ -33,8 +33,6 @@ class BookController extends Controller
      */
     public function actionIndex()
     {   
-        Book::updateAll(['rank'=> new \yii\db\Expression('[[rank]] + 1')]);
-        
         $dataProvider = new ActiveDataProvider([
             'query' => Book::find(),
         ]);

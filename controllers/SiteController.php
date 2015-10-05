@@ -22,6 +22,26 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
+            [
+                'class' => 'yii\filters\PageCache',
+                'only' => ['index'],
+                'duration' => 17000000,
+                'variations' => [
+                    \Yii::$app->language,
+                ],
+                //'dependency' => [
+                //    'class' => 'yii\caching\DbDependency',
+                //    'sql' => 'SELECT COUNT(*) FROM book',
+                //],
+                //'dependency' => [
+                //    'class' => 'yii\caching\ExpressionDependency',
+                //    'expression' => 'date("n")',
+                //],
+                'dependency' => [
+                    'class' => 'yii\caching\TagDependency',
+                    'tags' => ['books', 'users'],
+                ],
+            ],
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['logout','signup'],
@@ -66,6 +86,14 @@ class SiteController extends Controller
         $dataProvider = new ArrayDataProvider([
             'allModels' => Book::find()->orderBy('rank')->limit(3)->asArray()->all(),
         ]);
+        
+        //$test = Book::getDb()->cache(function($db){
+        //    Book::find()->orderBy('rank');
+        //});
+        
+        //$result = $db->cache(function ($db) {
+        //    return $db->createCommand('SELECT * FROM user WHERE id=4')->queryOne();
+        //});
                 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -187,5 +215,24 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+    
+    public function actionTest()
+    {   
+        if ( ($val = Yii::$app->cache->get("test")) === false )
+        {
+            $val = $this->ComputeVerySlowNumber();
+            Yii::$app->cache->set("test", $val);
+        }
+        
+        return $this->render('test', [
+            'slownumber' => $val,
+        ]);
+    }
+    
+    private function ComputeVerySlowNumber()
+    {
+        sleep(4);
+        return rand(0,10);
     }
 }

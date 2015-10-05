@@ -36,17 +36,21 @@ $this->title = 'My Yii Application';
                 {
                     echo "<h2>Your recent orders</h2>";
                     
-                    $dataProvider2 = new ActiveDataProvider([
-                        'query' => Yii::$app->user->identity->getBooks(),
-                        'pagination' => [
-                            'pageSize' => 3,
-                        ],
-                    ]);
+                    if ($this->beginCache("recentorders")) {
                     
-                    echo ListView::widget([
-                        'dataProvider' => $dataProvider2,
-                        'itemView' => '_book',
-                    ]);
+                        $dataProvider2 = new ActiveDataProvider([
+                            'query' => Yii::$app->user->identity->getBooks(),
+                            'pagination' => [
+                                'pageSize' => 3,
+                            ],
+                        ]);
+
+                        echo ListView::widget([
+                            'dataProvider' => $dataProvider2,
+                            'itemView' => '_book',
+                        ]);
+                        $this->endCache();
+                    }
                 }
                 ?>
             </div>

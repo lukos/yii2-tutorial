@@ -1,10 +1,9 @@
 <?php
 
-namespace app\Controllers;
+namespace app\controllers;
 
 use Yii;
 use app\models\Book;
-use app\models\Author;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -64,6 +63,7 @@ class BookController extends Controller
         $model = new Book();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            \yii\caching\TagDependency::invalidate(Yii::$app->cache, 'books');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -83,6 +83,7 @@ class BookController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            \yii\caching\TagDependency::invalidate(Yii::$app->cache, 'books');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -100,7 +101,8 @@ class BookController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        \yii\caching\TagDependency::invalidate(Yii::$app->cache, 'books');
+        
         return $this->redirect(['index']);
     }
 

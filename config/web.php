@@ -10,13 +10,6 @@ $config = [
     'language'=> 'en',
     'sourceLanguage'=> 'en',
     
-    
-    
-    //'defaultRoute'=>'book/index',
-    //'catchAll'=>['book/index'],
-    
-    
-    
     'components' => [
         'i18n' => [
             'translations' => [
@@ -26,7 +19,7 @@ $config = [
                         'app' => 'app.php',
                         'app/error' => 'error.php',
                     ],
-                    'on missingTranslation' => ['app\components\TranslationEventHandler', 'handleMissingTranslation']
+                    //'on missingTranslation' => ['app\components\TranslationEventHandler', 'handleMissingTranslation']
                 ],
             ],
         ],
@@ -38,7 +31,7 @@ $config = [
             ],
         ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\caching\XCache',
         ],
         'user' => [
             'identityClass' => 'app\models\User',
@@ -51,9 +44,6 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
         'log' => [
@@ -64,12 +54,6 @@ $config = [
                     'levels' => ['error'],
                     'logVars' => [''],
                 ],
-//                [
-//                    'class' => 'yii\log\FileTarget',
-//                    'levels' => ['info'],
-//                    'categories' => ['luke'],
-//                    'logVars' => ['_POST'],
-//                ],
             ],
         ],
         
@@ -77,29 +61,6 @@ $config = [
         'urlManager' => 
         [
             'enablePrettyUrl'=>'true',
-            //'enableStrictParsing'=>'true',
-            //
-            //'showScriptName'=>'false',
-            'rules' => [
-                //'books' => 'book/index',
-                '<controller>s' => '<controller>/index',
-                '<controller>/<id:\d+>' => '<controller>/view',   
-                //[
-                //    'pattern' => 'books',
-                //    'route' => 'book/index',
-                //    'suffix' => '.html',
-                //],
-                //'book/view/<id:\d+>'=>'book/view',
-                //'book/view/all'=>'book/index',
-                //[
-                //    'pattern' => 'book/<id:\d+>',
-                //    'route' => 'book/view',
-                //    'defaults' => ['id' => '2'],
-                //],
-                //'POST book/<id:\d+>' => 'book/update',
-                //'GET book/<id:\d+>' => 'book/view',
-                //'DELETE book/<id:\d+>' => 'book/delete',
-            ],
         ],
          'authManager' => [
             'class'=>'yii\rbac\DbManager',
@@ -107,14 +68,8 @@ $config = [
     ],
     'modules' => [
       'admin' => [
-        'class' => 'mdm\admin\Module',  
+        'class' => 'mdm\admin\Module', 
       ],  
-    ],
-    'as access' => [
-        'class' => 'mdm\admin\components\AccessControl',
-        'allowActions' => [
-            '*',
-        ],
     ],
     'as beforeRequest' => [
         'class' => 'app\components\LanguageHandler',
@@ -122,13 +77,13 @@ $config = [
     'params' => $params,
 ];
 
-//if (YII_ENV_DEV) {
+if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
-    //$config['bootstrap'][] = 'debug';
-    //$config['modules']['debug'] = 'yii\debug\Module';
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = 'yii\debug\Module';
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = 'yii\gii\Module';
-//}
+}
 
 return $config;

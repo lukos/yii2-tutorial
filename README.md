@@ -1,3 +1,5 @@
+> This project is unmaintained and out of date. It is based on a very old version of yii2 which cannot easily be updated. If you want to still use this, then you should obtain the latest version of Yii2 and use this repository only for guidance since most of the changed code will be the same.
+
 Yii 2 Basic Application Template
 ================================
 
